@@ -26,16 +26,40 @@ public class Coin : MonoBehaviour
         {
             collected = true;
 
-            // Lanzar particulas
-            collectParticles.Play();
+            // Avisar al GameManager
+            GameManager gameManager =
+                FindFirstObjectByType<GameManager>();
+
+            if (gameManager != null)
+            {
+                gameManager.CollectCoin();
+            }
+
+            // Particulas
+            if (collectParticles != null)
+            {
+                collectParticles.Play();
+            }
 
             // Ocultar moneda
-            GetComponent<MeshRenderer>().enabled = false;
+            MeshRenderer meshRenderer =
+                GetComponent<MeshRenderer>();
+
+            if (meshRenderer != null)
+            {
+                meshRenderer.enabled = false;
+            }
 
             // Desactivar collider
-            GetComponent<Collider>().enabled = false;
+            Collider coinCollider =
+                GetComponent<Collider>();
 
-            // Destruir después de que terminen las partículas
+            if (coinCollider != null)
+            {
+                coinCollider.enabled = false;
+            }
+
+            // Destruir despues de las particulas
             Destroy(gameObject, 1.5f);
         }
     }
